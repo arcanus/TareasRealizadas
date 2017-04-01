@@ -56,49 +56,11 @@
             </div>
 
             <div class="form-group">
-              <button class="btn btn-primary" type="button" data-toggle="collapse" href="#collapse-formTarea"
-                    aria-expanded="false" aria-controls="collapse-formTarea">Ingresar Nueva Tarea</button>
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalNuevaTarea">
+                Ingresar Nueva Tarea</button>
 
               <button class="btn btn-primary" type="button" data-toggle="modal"
                     data-target="#modalTareas">Exportar Tareas Para Mail</button>
-            </div>
-
-            <div class="collapse" id="collapse-formTarea">
-
-              <div class="panel panel-primary panel-acciones">
-
-                <div class="panel-heading">
-                  <h3 class="panel-title">Nueva Tarea:</h3>
-                </div>
-
-                <div class="panel-body">
-                    <form @submit="submitFormTarea">
-                      <div class="form-group">
-                        <label for="txtTarea">Nombre De La Tarea:</label>
-                        <input class="form-control" type="text" id="txtTarea" v-model="nuevaTarea.nombre">
-                      </div>
-                      <div class="form-group">
-                        <label for="txtUsuario">Nombre Del Usuario:</label>
-                        <input class="form-control" type="text" id="txtUsuario" v-model="nuevaTarea.usuario">
-                      </div>
-                      <div class="form-group">
-                        <label for="txtTicket">Número De Ticket:</label>
-                        <input class="form-control" type="text" id="txtTicket" v-model="nuevaTarea.ticket">
-                      </div>
-                      <div class="form-group">
-                        <label for="txtDescripcion">Descripción:</label>
-                        <textarea class="form-control" id="txtDescripcion" rows="4" v-model="nuevaTarea.desc"></textarea>
-                      </div>
-                      <div class="form-group">
-                        <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse-formTarea">Cancelar</button>
-                        <button class="btn btn-success" type="submit"
-                          data-toggle="collapse" data-target="#collapse-formTarea">Almacenar Tarea</button>
-                      </div>
-                    </form>
-                </div>
-
-              </div>
-
             </div>
 
           </div>
@@ -142,6 +104,46 @@
       <!-- MODAL MAIL -->
       <section>
 
+        <div class="modal fade" id="modalNuevaTarea" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Nueva Tarea:</h4>
+              </div>
+              <div class="modal-body">
+                <form @submit="submitFormTarea">
+                  <div class="form-group">
+                    <label for="txtTarea">Nombre De La Tarea:</label>
+                    <input class="form-control" type="text" id="txtTarea" v-model="nuevaTarea.nombre">
+                  </div>
+                  <div class="form-group">
+                    <label for="txtUsuario">Nombre Del Usuario:</label>
+                    <input class="form-control" type="text" id="txtUsuario" v-model="nuevaTarea.usuario">
+                  </div>
+                  <div class="form-group">
+                    <label for="txtTicket">Número De Ticket:</label>
+                    <input class="form-control" type="text" id="txtTicket" v-model="nuevaTarea.ticket">
+                  </div>
+                  <div class="form-group">
+                    <label for="txtDescripcion">Descripción:</label>
+                    <textarea class="form-control" id="txtDescripcion" rows="4" v-model="nuevaTarea.desc"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-success" type="submit">Almacenar Tarea</button>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+
+              </div> <!--Modal Footer -->
+            </div> <!--Modal Content -->
+          </div> <!--Modal Dialog-->
+        </div> <!--Modal-->
+
+
         <div class="modal fade" id="modalTareas" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -170,7 +172,7 @@
     <!-- Vue JS -->
     <script src="https://unpkg.com/vue"></script>
 
-    <script src="dist/bundle.js"></script>
+    <script src="app.js"></script>
 
   </body>
 

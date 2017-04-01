@@ -32,7 +32,7 @@ new Vue({
       this.nuevaTarea.ticket = '';
       this.nuevaTarea.desc = '';
     },
-    submitFormTarea: function(e) {
+    submitFormTarea: function(e) {      
       this.tareas.push({
         nombre: this.nuevaTarea.nombre,
         usuario: this.nuevaTarea.usuario,
@@ -42,6 +42,7 @@ new Vue({
       this.guardarEnLS();
       this.resetFormTareas();
       e.preventDefault();
+      $('#modalNuevaTarea').modal('hide');
     },
     cargarTareas: function() {
       var mail = '';
