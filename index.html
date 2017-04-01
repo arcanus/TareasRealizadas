@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Tareas Y Novedades</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Estilos Propios -->
+    <link rel="stylesheet" href="estilos.css">
+
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <!-- Jquery 3 -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Clipboard-JS -->
+    <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.0/clipboard.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <article class="contenedor_principal" id="VueApp">
+
+      <header class="cabecera">
+
+        <h1 class="animated bounce">Tareas Realizadas Y Novedades:</h1>
+        <h3 class="animated flipInX"v-if="tareas.length === 0">No hay tareas activas </h3>
+        <h3 class="animated flipInX"v-else-if="tareas.length === 1">Hay una tarea activa</h3>
+        <h3 class="animated flipInX"v-else>Hay {{ tareas.length }} tareas activas</h3>
+
+        <hr>
+
+        <div class="panel panel-primary panel-acciones animated zoomIn">
+
+          <div class="panel-heading">
+            <h3 class="panel-title">Acciones:</h3>
+          </div>
+
+          <div class="panel-body">
+
+            <div class="form-group">
+              <label>Técnico Responsable:</label>
+              <select class="form-control select-tecnico" v-model="tecnico" @change="guardarTecnico">
+                <option v-for="(tec, i) in tecnicos" :value="i">{{ tec }}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <button class="btn btn-primary" type="button" data-toggle="collapse" href="#collapse-formTarea"
+                    aria-expanded="false" aria-controls="collapse-formTarea">Ingresar Nueva Tarea</button>
+
+              <button class="btn btn-primary" type="button" data-toggle="modal"
+                    data-target="#modalTareas">Exportar Tareas Para Mail</button>
+            </div>
+
+            <div class="collapse" id="collapse-formTarea">
+
+              <div class="panel panel-primary panel-acciones">
+
+                <div class="panel-heading">
+                  <h3 class="panel-title">Nueva Tarea:</h3>
+                </div>
+
+                <div class="panel-body">
+                    <form @submit="submitFormTarea">
+                      <div class="form-group">
+                        <label for="txtTarea">Nombre De La Tarea:</label>
+                        <input class="form-control" type="text" id="txtTarea" v-model="nuevaTarea.nombre">
+                      </div>
+                      <div class="form-group">
+                        <label for="txtUsuario">Nombre Del Usuario:</label>
+                        <input class="form-control" type="text" id="txtUsuario" v-model="nuevaTarea.usuario">
+                      </div>
+                      <div class="form-group">
+                        <label for="txtTicket">Número De Ticket:</label>
+                        <input class="form-control" type="text" id="txtTicket" v-model="nuevaTarea.ticket">
+                      </div>
+                      <div class="form-group">
+                        <label for="txtDescripcion">Descripción:</label>
+                        <textarea class="form-control" id="txtDescripcion" rows="4" v-model="nuevaTarea.desc"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse-formTarea">Cancelar</button>
+                        <button class="btn btn-success" type="submit"
+                          data-toggle="collapse" data-target="#collapse-formTarea">Almacenar Tarea</button>
+                      </div>
+                    </form>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <section class="lista_tareas animated zoomIn">
+
+        <ul class="list-group">
+
+          <li class="list-group-item" v-for="(tarea, i) in tareas" :indice="i">
+
+            <div class="tarea-info" data-toggle="collapse" :href="'#collapse-tarea-'+i"
+                  aria-expanded="false" aria-controls="'collapse-tarea-'+i">
+              <h3><strong>{{ tarea.nombre }}</strong></h3>
+              <h4><strong>{{ tarea.usuario }}</strong></h4>
+              <h5><strong>Ticket #{{ tarea.ticket }}</strong></h5>
+            </div>
+
+            <div class="tarea-descripcion">
+              <div class="tarea-acciones">
+                <button type="button" name="button" class="btn btn-danger btn-xs" @click="eliminarTarea(i)">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Eliminar Tarea</button>
+              </div>
+              <div class="collapse" :id="'collapse-tarea-' + i">
+                <h5><strong>Descripcion:</strong></h5>
+                <div class="well">
+                  {{ tarea.desc }}
+                </div>
+              </div>
+            </div>
+
+          </li>
+
+        </ul>
+
+      </section>
+
+      <!-- MODAL MAIL -->
+      <section>
+
+        <div class="modal fade" id="modalTareas" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Tareas Realizadas:</h4>
+              </div>
+              <div class="modal-body">
+                <textarea class="form-control" id="txtTareas" rows="20">{{cargarTareas()}}</textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success btnCopiarMail"
+                  data-clipboard-action="copy" data-clipboard-target="#txtTareas">Copiar Mail</button>
+                <button type="button" class="btn btn-info" @click="enviarMail">Enviar Mail</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+      </section>
+      <!-- /MODAL MAIL -->
+
+    </article>
+
+    <!-- Vue JS -->
+    <script src="https://unpkg.com/vue"></script>
+
+    <script src="dist/bundle.js"></script>
+
+  </body>
+
+</html>
