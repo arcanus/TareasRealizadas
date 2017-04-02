@@ -46,6 +46,6 @@
   width: 300px;
 }
 
-#txtDescripcion #txtTareas {
+#txtDescripcion, #txtTareas {
   resize: vertical;
 }
