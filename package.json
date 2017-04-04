@@ -2,7 +2,11 @@
   "name": "tareas-realizadas",
   "version": "1.0.0",
   "description": "Log de tareas realizadas del sector IT del diario La Mañana",
-  "main": "index.html",  
+  "main": "index.html",
+  "scripts": {
+    "build": "webpack -p",
+    "build:dev": "webpack-dev-server"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/arcanus/TareasRealizadas.git"
@@ -12,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/arcanus/TareasRealizadas/issues"
   },
-  "homepage": "https://github.com/arcanus/TareasRealizadas#readme"
+  "homepage": "https://github.com/arcanus/TareasRealizadas#readme",
+  "devDependencies": {
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2"
+  }
 }
