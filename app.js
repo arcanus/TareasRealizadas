@@ -4,6 +4,7 @@ new Vue({
   el: '#VueApp',
   data: {
     tareas: JSON.parse(localStorage.getItem('tareas')),
+    n_tareas: 0,
     nuevaTarea: {
       nombre: '',
       usuario: '',
@@ -32,7 +33,7 @@ new Vue({
       this.nuevaTarea.ticket = '';
       this.nuevaTarea.desc = '';
     },
-    submitFormTarea: function(e) {      
+    submitFormTarea: function(e) {
       this.tareas.push({
         nombre: this.nuevaTarea.nombre,
         usuario: this.nuevaTarea.usuario,
@@ -53,14 +54,17 @@ new Vue({
       mail += 'Fecha: ' + this.obtenerFecha() + '\n';
       mail += 'Técnico: ' + this.tecnicos[this.tecnico];
 
-      this.tareas.forEach(function(tarea){
-        mail += '\n\n';
-        mail += 'Tarea: ' + tarea.nombre + '\n';
-        mail += 'Usuario: ' + tarea.usuario + '\n';
-        mail += 'Ticket: ' + tarea.ticket + '\n';
-        mail += 'Descripcion: ' + tarea.desc;
+      if (this.tareas)
+      {
+        this.tareas.forEach(function(tarea){
+          mail += '\n\n';
+          mail += 'Tarea: ' + tarea.nombre + '\n';
+          mail += 'Usuario: ' + tarea.usuario + '\n';
+          mail += 'Ticket: ' + tarea.ticket + '\n';
+          mail += 'Descripcion: ' + tarea.desc;
+        });
+      }
 
-      })
       return mail;
     },
     obtenerFecha: function() {

@@ -34,8 +34,9 @@
       <header class="cabecera">
 
         <h1 class="animated bounce">Tareas Realizadas Y Novedades:</h1>
-        <h3 class="animated flipInX"v-if="tareas.length === 0">No hay tareas activas </h3>
-        <h3 class="animated flipInX"v-else-if="tareas.length === 1">Hay una tarea activa</h3>
+        <h3 class="animated flipInX"v-if="tareas === null">No hay tareas activas </h3>
+        <h3 class="animated flipInX"v-else-if="tareas.length == 0">No hay tareas activas </h3>
+        <h3 class="animated flipInX"v-else-if="tareas.length == 1">Hay una tarea activa</h3>
         <h3 class="animated flipInX"v-else>Hay {{ tareas.length }} tareas activas</h3>
 
         <hr>
