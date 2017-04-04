@@ -3,7 +3,7 @@ var clipboard = new Clipboard('.btnCopiarMail');
 new Vue({
   el: '#VueApp',
   data: {
-    tareas: JSON.parse(localStorage.getItem('tareas')),
+    tareas: JSON.parse(localStorage.getItem('tareas')) ? JSON.parse(localStorage.getItem('tareas')) : [],
     n_tareas: 0,
     nuevaTarea: {
       nombre: '',
@@ -33,17 +33,20 @@ new Vue({
       this.nuevaTarea.ticket = '';
       this.nuevaTarea.desc = '';
     },
-    submitFormTarea: function(e) {
-      this.tareas.push({
-        nombre: this.nuevaTarea.nombre,
-        usuario: this.nuevaTarea.usuario,
-        ticket: this.nuevaTarea.ticket,
-        desc: this.nuevaTarea.desc
-      });
-      this.guardarEnLS();
-      this.resetFormTareas();
-      e.preventDefault();
-      $('#modalNuevaTarea').modal('hide');
+    almacenarTarea: function(e) {
+      if (this.tareas)
+      {
+        this.tareas.push({
+          nombre: this.nuevaTarea.nombre,
+          usuario: this.nuevaTarea.usuario,
+          ticket: this.nuevaTarea.ticket,
+          desc: this.nuevaTarea.desc
+        });
+        this.guardarEnLS();
+        this.resetFormTareas();
+        e.preventDefault();
+        $('#modalNuevaTarea').modal('hide');
+      }
     },
     cargarTareas: function() {
       var mail = '';
@@ -64,7 +67,6 @@ new Vue({
           mail += 'Descripcion: ' + tarea.desc;
         });
       }
-
       return mail;
     },
     obtenerFecha: function() {
