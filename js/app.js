@@ -56,7 +56,7 @@ new Vue({
       mail += '==================\n\n';
 
       mail += 'Fecha: ' + this.obtenerFecha() + '\n';
-      mail += 'Técnico: ' + this.tecnicos[this.tecnico];
+      mail += 'Tecnico: ' + this.tecnicos[this.tecnico];
 
       if (this.tareas)
       {
@@ -89,7 +89,18 @@ new Vue({
       return today;
     },
     enviarMail: function() {
-      alert('Función momentaneamente deshabilitada...');
+      $.ajax({
+        method: 'get',
+        url: 'mail.php',
+        data: {
+          'mailTecnico': 'vazquezp@lmneuquen.com.ar',
+          'cuerpoMail': this.cargarTareas(),
+          'ajax': true
+        },
+        success: function (data) {
+          console.log('Todo mas que bien!');
+        }
+      })
     },
     guardarTecnico: function() {
       localStorage.setItem('tecnico',this.tecnico);
