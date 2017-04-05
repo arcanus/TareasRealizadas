@@ -1,5 +1,4 @@
 import Vue from './vue';
-
 var clipboard = new Clipboard('.btnCopiarMail');
 
 new Vue({
