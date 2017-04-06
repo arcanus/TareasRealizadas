@@ -70,6 +70,29 @@ new Vue({
       }
       return mail;
     },
+    armarMailHTML: function() {
+      var mail = '';
+
+      mail = '<h1>Tareas Realizadas:</h1>\n';
+      mail += '<hr>\n';
+
+      mail += '<h3>Fecha: ' + this.obtenerFecha() + '</h3>\n';
+      mail += '<h3>Tecnico: ' + this.tecnicos[this.tecnico] + '</h3>\n';
+      mail += '<hr>';
+
+      if (this.tareas)
+      {
+        this.tareas.forEach(function(tarea){
+          mail += '\n';
+          mail += '<h3>Tarea: ' + tarea.nombre + '</h3>\n';
+          mail += '<h3>Usuario: ' + tarea.usuario + '</h3>\n';
+          mail += '<h3>Ticket: ' + tarea.ticket + '</h3>\n';
+          mail += '<h3>Descripcion: ' + tarea.desc + '</h3>\n';
+          mail += '<hr>';
+        });
+      }
+      return mail;
+    },
     obtenerFecha: function() {
       var today = new Date();
       var dd = today.getDate();
@@ -90,17 +113,17 @@ new Vue({
     },
     enviarMail: function() {
       $.ajax({
-        method: 'get',
+        method: 'GET',
         url: 'mail.php',
         data: {
           'mailTecnico': 'vazquezp@lmneuquen.com.ar',
-          'cuerpoMail': this.cargarTareas(),
+          'cuerpoMail': this.armarMailHTML(),
           'ajax': true
         },
         success: function (data) {
-          console.log('Todo mas que bien!');
+          console.log('Mail enviado correctamente!');          
         }
-      })
+      });
     },
     guardarTecnico: function() {
       localStorage.setItem('tecnico',this.tecnico);

@@ -4,7 +4,7 @@ require 'PHPMailer/PHPMailerAutoload.php';
 $mail = new PHPMailer;
 
 //$mail->SMTPDebug = 3;                               // Enable verbose debug output
-
+$mail->CharSet = 'UTF-8';
 $mail->isSMTP();                                      // Set mailer to use SMTP
 $mail->Host = '172.16.30.8';  // Specify main and backup SMTP servers
 $mail->SMTPAuth = false;                               // Enable SMTP authentication
@@ -14,7 +14,7 @@ $mail->SMTPAuth = false;                               // Enable SMTP authentica
 $mail->Port = 25;                                    // TCP port to connect to
 
 $mail->setFrom($_GET['mailTecnico'], 'Tecnico');
-$mail->addAddress('sistemas@lmneuquen.com.ar', 'Sistemas');     // Add a recipient
+$mail->addAddress('kitarofana@gmail.com', 'Paul');     // Add a recipient
 
 $mail->addReplyTo($_GET['mailTecnico'], 'Tecnico');
 // $mail->addCC('cc@example.com');
@@ -22,7 +22,7 @@ $mail->addReplyTo($_GET['mailTecnico'], 'Tecnico');
 
 // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-$mail->isHTML(false);                                  // Set email format to HTML
+$mail->isHTML(true);                                  // Set email format to HTML
 
 $mail->Subject = 'Novedades';
 $mail->Body    = $_GET['cuerpoMail'];
