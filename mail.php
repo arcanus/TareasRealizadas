@@ -13,10 +13,10 @@ $mail->SMTPAuth = false;                               // Enable SMTP authentica
 // $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
 $mail->Port = 25;                                    // TCP port to connect to
 
-$mail->setFrom($_GET['mailTecnico'], 'Tecnico');
-$mail->addAddress('kitarofana@gmail.com', 'Paul');     // Add a recipient
+$mail->setFrom($_GET['mailTecnico'], $_GET['nombreTecnico']);
+$mail->addAddress('sistemas@lmneuquen.com.ar', 'Sistemas');     // Add a recipient
 
-$mail->addReplyTo($_GET['mailTecnico'], 'Tecnico');
+$mail->addReplyTo($_GET['mailTecnico'], $_GET['nombreTecnico']);
 // $mail->addCC('cc@example.com');
 // $mail->addBCC('bcc@example.com');
 
@@ -24,15 +24,14 @@ $mail->addReplyTo($_GET['mailTecnico'], 'Tecnico');
 // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 $mail->isHTML(true);                                  // Set email format to HTML
 
-$mail->Subject = 'Novedades';
+$mail->Subject = 'Novedades - ' . $_GET['fecha'];
 $mail->Body    = $_GET['cuerpoMail'];
 // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 if(!$mail->send()) {
-    echo 'Message could not be sent.';
-    echo 'Message has been sent';
+    echo 'Message could not be sent.';    
     echo 'Mailer Error: ' . $mail->ErrorInfo;
 } else {
-	echo 'Mail enviado!';
+	echo 'Mail enviado correctamente!';
 }
 ?>

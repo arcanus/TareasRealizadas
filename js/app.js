@@ -40,7 +40,7 @@ new Vue({
         this.tareas.push({
           nombre: this.nuevaTarea.nombre,
           usuario: this.nuevaTarea.usuario,
-          ticket: this.nuevaTarea.ticket,
+          ticket: this.nuevaTarea.ticket != 0 ? this.nuevaTarea.ticket : 'Sin Ticket!',
           desc: this.nuevaTarea.desc
         });
         this.guardarEnLS();
@@ -78,18 +78,20 @@ new Vue({
 
       mail += '<h3>Fecha: ' + this.obtenerFecha() + '</h3>\n';
       mail += '<h3>Tecnico: ' + this.tecnicos[this.tecnico] + '</h3>\n';
-      mail += '<hr>';
+      mail += '<hr>\n';
 
       if (this.tareas)
       {
+        mail += '<ul>\n';
         this.tareas.forEach(function(tarea){
           mail += '\n';
-          mail += '<h3>Tarea: ' + tarea.nombre + '</h3>\n';
-          mail += '<h3>Usuario: ' + tarea.usuario + '</h3>\n';
-          mail += '<h3>Ticket: ' + tarea.ticket + '</h3>\n';
-          mail += '<h3>Descripcion: ' + tarea.desc + '</h3>\n';
+          mail += '<li><h3>Tarea: ' + tarea.nombre + '</h3></li>\n';
+          mail += '<li><h3>Usuario: ' + tarea.usuario + '</h3></li>\n';
+          mail += '<li><h3>Ticket: ' + tarea.ticket + '</h3></li>\n';
+          mail += '<li><h3>Descripcion: ' + tarea.desc + '</h3></li>\n';
           mail += '<hr>';
         });
+        mail += '</ul>\n';
       }
       return mail;
     },
@@ -112,21 +114,33 @@ new Vue({
       return today;
     },
     enviarMail: function() {
-      $.ajax({
-        method: 'GET',
-        url: 'mail.php',
-        data: {
-          'mailTecnico': 'vazquezp@lmneuquen.com.ar',
-          'cuerpoMail': this.armarMailHTML(),
-          'ajax': true
-        },
-        success: function (data) {
-          console.log('Mail enviado correctamente!');          
-        }
-      });
+      if (window.confirm('¿Seguro desea enviar el mail de novedades?'))
+      {
+        $.ajax({
+          method: 'GET',
+          url: 'mail.php',
+          data: {
+            'mailTecnico': 'vazquezp@lmneuquen.com.ar',
+            'nombreTecnico': this.tecnicos[this.tecnico],
+            'cuerpoMail': this.armarMailHTML(),
+            'fecha': this.obtenerFecha(),
+            'ajax': true
+          },
+          success: function (data) {
+            console.log(data);
+          }
+        });
+      }
     },
     guardarTecnico: function() {
       localStorage.setItem('tecnico',this.tecnico);
+    },
+    eliminarTodasLasTareas: function() {
+      if(window.confirm('¿Confirma que desea eliminar todas als tareas?'))
+      {
+        this.tareas = [];
+        this.guardarEnLS();
+      }
     }
   }
 });
