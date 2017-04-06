@@ -9,7 +9,7 @@ new Vue({
     nuevaTarea: {
       nombre: '',
       usuario: '',
-      ticket: '',
+      ticket: 0,
       desc: ''
     },
     tecnico: localStorage.getItem('tecnico'),
