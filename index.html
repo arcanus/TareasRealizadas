@@ -52,7 +52,7 @@
             <div class="form-group">
               <label>Técnico Responsable:</label>
               <select class="form-control select-tecnico" v-model="tecnico" @change="guardarTecnico">
-                <option v-for="(tec, i) in tecnicos" :value="i">{{ tec }}</option>
+                <option v-for="(tec, i) in tecnicos" :value="i">{{ tec.nombre }}</option>
               </select>
             </div>
 
