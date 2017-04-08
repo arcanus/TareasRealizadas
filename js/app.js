@@ -4,8 +4,7 @@ var clipboard = new Clipboard('.btnCopiarMail');
 new Vue({
   el: '#VueApp',
   data: {
-    tareas: JSON.parse(localStorage.getItem('tareas')) ? JSON.parse(localStorage.getItem('tareas')) : [],
-    n_tareas: 0,
+    tareas: JSON.parse(localStorage.getItem('tareas')) ? JSON.parse(localStorage.getItem('tareas')) : [],    
     nuevaTarea: {
       nombre: '',
       usuario: '',
