@@ -33,11 +33,10 @@
 
       <header class="cabecera">
 
-        <h1 class="animated bounce">Tareas Realizadas Y Novedades:</h1>
-        <h3 class="animated flipInX"v-if="tareas === null">No hay tareas activas </h3>
-        <h3 class="animated flipInX"v-else-if="tareas.length == 0">No hay tareas activas </h3>
-        <h3 class="animated flipInX"v-else-if="tareas.length == 1">Hay una tarea activa</h3>
-        <h3 class="animated flipInX"v-else>Hay {{ tareas.length }} tareas activas</h3>
+        <h1 class="animated bounce">Tareas Realizadas Y Novedades:</h1>        
+        <h3 class="animated flipInX" v-if="tareas.length == 0">No hay tareas activas </h3>
+        <h3 class="animated flipInX" v-else-if="tareas.length == 1">Hay una tarea activa</h3>
+        <h3 class="animated flipInX" v-else>Hay {{ tareas.length }} tareas activas</h3>
 
         <hr>
 
@@ -52,7 +51,7 @@
             <div class="form-group">
               <label>Técnico Responsable:</label>
               <select class="form-control select-tecnico" v-model="tecnico" @change="guardarTecnico">
-                <option v-for="(tec, i) in tecnicos" :value="i">{{ tec }}</option>
+                <option v-for="(tec, i) in tecnicos" :value="i">{{ tec.nombre }}</option>
               </select>
             </div>
 
@@ -63,7 +62,7 @@
               <button class="btn btn-primary" type="button" data-toggle="modal"
                     data-target="#modalTareas">Exportar Tareas Para Mail</button>
 
-              <button class="btn btn-danger" type="button" @click="eliminarTodasLasTareas">
+              <button class="btn btn-danger" type="button" @click="eliminarTodasLasTareas" v-if="tareas.length > 0">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                   Eliminar Todas Las Tareas</button>
 

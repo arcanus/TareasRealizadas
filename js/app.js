@@ -4,20 +4,31 @@ var clipboard = new Clipboard('.btnCopiarMail');
 new Vue({
   el: '#VueApp',
   data: {
-    tareas: JSON.parse(localStorage.getItem('tareas')) ? JSON.parse(localStorage.getItem('tareas')) : [],
-    n_tareas: 0,
+    tareas: JSON.parse(localStorage.getItem('tareas')) ? JSON.parse(localStorage.getItem('tareas')) : [],    
     nuevaTarea: {
       nombre: '',
       usuario: '',
       ticket: 0,
       desc: ''
     },
-    tecnico: localStorage.getItem('tecnico'),
+    tecnico: localStorage.getItem('tecnico') ? localStorage.getItem('tecnico') : 0,
     tecnicos: [
-      'Paulo Vazquez',
-      'David Infante',
-      'Santiago Castellanos',
-      'German Del Tedesco'
+      {
+        nombre: 'Paulo Vazquez',
+        mail:   'vazquezp@lmneuquen.com.ar'
+      },
+      {
+        nombre: 'David Infante',
+        mail:   'infanted@lmneuquen.com.ar'
+      },
+      {
+        nombre: 'Santiago Castellanos',
+        mail:   'castellanos@lmneuquen.com'
+      },
+      {
+        nombre: 'Germán Del Tedesco',
+        mail:   'deltedescog@lmneuquen.com.ar'
+      }
     ]
   },
   methods: {
@@ -56,7 +67,7 @@ new Vue({
       mail += '==================\n\n';
 
       mail += 'Fecha: ' + this.obtenerFecha() + '\n';
-      mail += 'Tecnico: ' + this.tecnicos[this.tecnico];
+      mail += 'Tecnico: ' + this.tecnicos[this.tecnico].nombre;
 
       if (this.tareas)
       {
@@ -77,7 +88,7 @@ new Vue({
       mail += '<hr>\n';
 
       mail += '<h3>Fecha: ' + this.obtenerFecha() + '</h3>\n';
-      mail += '<h3>Tecnico: ' + this.tecnicos[this.tecnico] + '</h3>\n';
+      mail += '<h3>Tecnico: ' + this.tecnicos[this.tecnico].nombre + '</h3>\n';
       mail += '<hr>\n';
 
       if (this.tareas)
@@ -120,8 +131,8 @@ new Vue({
           method: 'GET',
           url: 'mail.php',
           data: {
-            'mailTecnico': 'vazquezp@lmneuquen.com.ar',
-            'nombreTecnico': this.tecnicos[this.tecnico],
+            'mailTecnico': this.tecnicos[this.tecnico].mail,
+            'nombreTecnico': this.tecnicos[this.tecnico].nombre,
             'cuerpoMail': this.armarMailHTML(),
             'fecha': this.obtenerFecha(),
             'ajax': true
