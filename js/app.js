@@ -156,7 +156,7 @@ new Vue({
       }
     },
     agregarTarea: function(tar) {
-      let tareaEspecial = {};
+      var tareaEspecial = {};
       switch (tar) {
         case 'TrabajoDeProsper':
           tareaEspecial = {
