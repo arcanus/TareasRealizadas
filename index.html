@@ -33,7 +33,7 @@
 
       <header class="cabecera">
 
-        <h1 class="animated bounce">Tareas Realizadas Y Novedades:</h1>        
+        <h1 class="animated bounce">Tareas Realizadas Y Novedades:</h1>
         <h3 class="animated flipInX" v-if="tareas.length == 0">No hay tareas activas </h3>
         <h3 class="animated flipInX" v-else-if="tareas.length == 1">Hay una tarea activa</h3>
         <h3 class="animated flipInX" v-else>Hay {{ tareas.length }} tareas activas</h3>
@@ -57,14 +57,33 @@
 
             <div class="form-group">
               <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalNuevaTarea">
-                Ingresar Nueva Tarea</button>
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ingresar Nueva Tarea
+              </button>
 
               <button class="btn btn-primary" type="button" data-toggle="modal"
-                    data-target="#modalTareas">Exportar Tareas Para Mail</button>
+                    data-target="#modalTareas" v-if="tareas.length > 0">
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Exportar Tareas Para Mail</button>
 
               <button class="btn btn-danger" type="button" @click="eliminarTodasLasTareas" v-if="tareas.length > 0">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                   Eliminar Todas Las Tareas</button>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" @click="mostrarTareasEspeciales = $event.target.checked"> Tareas Especiales
+                </label>
+              </div>
+
+              <div class="panel panel-default" v-if="mostrarTareasEspeciales">
+                <div class="panel-body">
+                  <button type="button" class="btn btn-success" @click="agregarTarea('TrabajoDeProsper')">
+                    <span class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></span> Trabajos De Prosper</button>
+                  <button type="button" class="btn btn-success" @click="agregarTarea('ImpresionCodigos')">
+                    <span class="glyphicon glyphicon-barcode" aria-hidden="true"></span> Impresión De Códigos</button>
+                  <button type="button" class="btn btn-success" @click="agregarTarea('SmartCycles')">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Smart Cycles</button>
+                </div>
+              </div>
 
             </div>
 
@@ -74,7 +93,7 @@
 
       </header>
 
-      <section class="lista_tareas animated zoomIn">
+      <section class="lista_tareas animated zoomIn" v-if="tareas.length > 0">
 
         <ul class="list-group">
 
@@ -172,7 +191,15 @@
       </section>
       <!-- /MODAL MAIL -->
 
+      <footer>
+        <div class="footer">
+          <h5>Tareas Realizadas es un desarrollo interno del area de sistemas del diario La Mañana</h5>
+          <h6><strong>Versión Actual: {{ version }}</strong></h6>
+        </div>
+      </footer>
+
     </article>
+
 
     <script src="./dist/bundle.js"></script>
 

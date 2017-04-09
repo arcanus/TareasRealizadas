@@ -26,6 +26,10 @@
   width: 100%;
 }
 
+.lista_tareas li {
+  padding: 5px 15px 20px 15px;
+}
+
 .tarea-info {
   margin-left: 1em;
 }
@@ -44,6 +48,17 @@
 
 .select-tecnico {
   width: 300px;
+}
+
+footer {
+  width: 100%;
+}
+
+.footer {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
 }
 
 #txtDescripcion, #txtTareas {
