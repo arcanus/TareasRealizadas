@@ -4,13 +4,15 @@ var clipboard = new Clipboard('.btnCopiarMail');
 new Vue({
   el: '#VueApp',
   data: {
-    tareas: JSON.parse(localStorage.getItem('tareas')) ? JSON.parse(localStorage.getItem('tareas')) : [],    
+    version: '1.1.0',
+    tareas: JSON.parse(localStorage.getItem('tareas')) ? JSON.parse(localStorage.getItem('tareas')) : [],
     nuevaTarea: {
       nombre: '',
       usuario: '',
       ticket: 0,
       desc: ''
     },
+    mostrarTareasEspeciales: false,
     tecnico: localStorage.getItem('tecnico') ? localStorage.getItem('tecnico') : 0,
     tecnicos: [
       {
@@ -51,7 +53,7 @@ new Vue({
         this.tareas.push({
           nombre: this.nuevaTarea.nombre,
           usuario: this.nuevaTarea.usuario,
-          ticket: this.nuevaTarea.ticket != 0 ? this.nuevaTarea.ticket : 'Sin Ticket!',
+          ticket: this.nuevaTarea.ticket != 0 ? this.nuevaTarea.ticket : 'Sin Ticket',
           desc: this.nuevaTarea.desc
         });
         this.guardarEnLS();
@@ -151,6 +153,46 @@ new Vue({
       {
         this.tareas = [];
         this.guardarEnLS();
+      }
+    },
+    agregarTarea: function(tar) {
+      let tareaEspecial = {};
+      switch (tar) {
+        case 'TrabajoDeProsper':
+          tareaEspecial = {
+            nombre: 'Trabajos De Prosper',
+            usuario: this.tecnicos[this.tecnico].nombre,
+            ticket: 'Sin Ticket',
+            desc: 'Se realizaron los trabajos de prosper correspondientes.'
+          };
+          this.tareas.push(tareaEspecial);
+          this.guardarEnLS();
+          break;
+
+          case 'ImpresionCodigos':
+            tareaEspecial = {
+              nombre: 'Impresión De Códigos',
+              usuario: this.tecnicos[this.tecnico].nombre,
+              ticket: 'Sin Ticket',
+              desc: 'Se imprimieron los códigos de barra.'
+            };
+            this.tareas.push(tareaEspecial);
+            this.guardarEnLS();
+            break;
+
+            case 'SmartCycles':
+              tareaEspecial = {
+                nombre: 'Smart Cycles',
+                usuario: this.tecnicos[this.tecnico].nombre,
+                ticket: 'Sin Ticket',
+                desc: 'Se realizaron los Smart Cycles correspondientes.'
+              };
+              this.tareas.push(tareaEspecial);
+              this.guardarEnLS();
+              break;
+
+        default:
+            return;
       }
     }
   }
