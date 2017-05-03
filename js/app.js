@@ -4,7 +4,7 @@ var clipboard = new Clipboard('.btnCopiarMail');
 new Vue({
   el: '#VueApp',
   data: {
-    version: '1.1.0',
+    version: '1.1.1',
     tareas: JSON.parse(localStorage.getItem('tareas')) ? JSON.parse(localStorage.getItem('tareas')) : [],
     nuevaTarea: {
       nombre: '',
@@ -122,7 +122,7 @@ new Vue({
           mm='0'+mm
       }
 
-      today = mm+'/'+dd+'/'+yyyy;
+      today = dd+'/'+mm+'/'+yyyy;
 
       return today;
     },
